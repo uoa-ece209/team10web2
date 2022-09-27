@@ -1,4 +1,4 @@
-async function bt() {
+function bt() {
 	
 	console.log("Beginning connection attempt")
 
