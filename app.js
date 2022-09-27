@@ -1,4 +1,6 @@
 async function inform() {
+	
+	console.log("Beginning avalability check")
 
 	var available = await Bluetooth.getAvailability();
 
