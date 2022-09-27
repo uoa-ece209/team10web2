@@ -2,7 +2,7 @@ function bt() {
 	
 	console.log("Beginning connection attempt")
 
-	navigator.bluetooth.requestDevice()
+	navigator.bluetooth.requestDevice({acceptAllDevices: true})
 		.then(device => {
 			console.log('> Name:             ' + device.name);
 			console.log('> ID:               ' + device.id);
