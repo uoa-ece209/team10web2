@@ -1,0 +1,43 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: "josefin-sans";
+  font-weight: lighter;
+  font-size: 128px;
+}
+h1.brand, h2.brand, h3.brand, h4.brand, h5.brand, h6.brand {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+h1.brand::before, h2.brand::before, h3.brand::before, h4.brand::before, h5.brand::before, h6.brand::before {
+  content: "Team";
+  border-top: 0.2em solid black;
+  border-left: 0.2em solid black;
+  padding-left: 0.4em;
+  padding-bottom: 0.2em;
+}
+h1.brand::after, h2.brand::after, h3.brand::after, h4.brand::after, h5.brand::after, h6.brand::after {
+  content: "10";
+  padding-left: 0;
+  font-size: 2.19em;
+  font-weight: 300;
+}
+
+p {
+  font-family: "tenez";
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url(/resources/images/10.svg);
+  background-repeat: repeat;
+  background-size: 100px;
+  z-index: -10;
+  opacity: 0.1;
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=main.css.map */
