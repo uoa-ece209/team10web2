@@ -1,7 +1,6 @@
 h1, h2, h3, h4, h5, h6 {
   font-family: "josefin-sans";
   font-weight: lighter;
-  font-size: 128px;
 }
 h1.brand, h2.brand, h3.brand, h4.brand, h5.brand, h6.brand {
   text-transform: uppercase;
@@ -38,6 +37,24 @@ p {
   opacity: 0.1;
   transform: rotate(45deg);
   overflow: hidden;
+}
+
+button {
+  font-family: "josefin-sans";
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  padding: 16px;
+  margin: 4px;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+button:hover {
+  background-color: cadetblue;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=main.css.map */
