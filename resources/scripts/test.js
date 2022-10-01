@@ -8,9 +8,9 @@ function begin() {
 	connection.on('data', receive)
 
 	connection.open()
-		.then(() => {
-			connection.write([0x68, 0x69])
-		})
+		// .then(() => {
+		// 	connection.write([0x68, 0x69])
+		// })
 
 }
 
