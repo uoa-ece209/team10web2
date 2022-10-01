@@ -1,6 +1,6 @@
 var connection = new BLEConnection({
-	serviceUUID: 0x181A,
-	characteristicUUID: 0x2A6E
+	serviceUUID: 0xFFE0,
+	characteristicUUID: 0xFFE1
 })
 
 function begin() {
