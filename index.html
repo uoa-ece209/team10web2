@@ -2,14 +2,28 @@
 <html>
   <head>
     <title>Team 10</title>
-    <link rel="stylesheet" type="text/css" href="resources/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="/resources/styles/main.css">
     <link rel="stylesheet" href="https://use.typekit.net/now3ftk.css">
-    <script src="resources/scripts/ble.js"></script>
-    <script src="resources/scripts/test.js"></script>
+    <script src="/resources/scripts/ble.js"></script>
+    <script src="/resources/scripts/test.js"></script>
   </head>
   <body>
     <h1 class="brand"></h1>
     <p>This page is a work in progress</p>
-    <button onclick="begin()">Begin Bluetooth process</button>
+    <button onclick="begin()">Begin Bluetooth&reg; process</button>
+    <hr>
+    <button onclick="connection.write(255)">switch base</button>
+    <button onclick="connection.write(254)">switch speed</button>
+    <hr>
+    <button onclick="connection.write(253)">decimal place 3</button>
+    <button onclick="connection.write(252)">decimal place 2</button>
+    <button onclick="connection.write(251)">decimal place 1</button>
+    <button onclick="connection.write(250)">decimal place 0</button>
+    <button onclick="connection.write(249)">no decimal place</button>
+    <hr>
+    <label>jump to decimal value 
+      <input type="number" min="0" max="9920" step="40" id="jump">
+    </label>
+    <button onclick="connection.write(document.getElementById('jump').value / 40)">jump base 10</button>
   </body>
 </html>
