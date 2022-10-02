@@ -39,22 +39,40 @@ p {
   overflow: hidden;
 }
 
-button {
+button, input {
   font-family: "josefin-sans";
-  text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 16px;
+  margin: 4px;
+}
+
+button {
   background-color: #1e1e1e;
   color: white;
   border: none;
   border-radius: 2px;
-  padding: 16px;
-  margin: 4px;
   transition-property: background-color;
   transition-duration: 0.2s;
 }
 button:hover {
   background-color: cadetblue;
   cursor: pointer;
+}
+
+input {
+  border: 2px solid #1e1e1e;
+  border-radius: 2px;
+}
+input:hover {
+  border-color: cadetblue;
+}
+
+.group {
+  background-color: #D3ECED;
+  border-radius: 8px;
+  padding: 32px;
+  margin: 16px;
 }
 
 /*# sourceMappingURL=main.css.map */
