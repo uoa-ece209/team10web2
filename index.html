@@ -2,8 +2,9 @@
 <html>
   <head>
     <title>Team 10</title>
-    <link rel="stylesheet" type="text/css" href="resources/styles/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://use.typekit.net/now3ftk.css">
+    <link rel="stylesheet" type="text/css" href="resources/styles/main.css">
     <script src="resources/scripts/ble.js"></script>
     <script src="resources/scripts/test.js"></script>
   </head>
@@ -11,6 +12,7 @@
     <div class="group">
       <h1 class="brand"></h1>
       <button onclick="begin()">Begin Bluetooth&reg; process</button>
+      <p id="errormsg"> </p>
     </div>
     <div class="group">
       <button onclick="connection.write(255)">switch base</button>
