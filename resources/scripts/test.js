@@ -5,6 +5,8 @@ var connection = new BLEConnection({
 
 function begin() {
 
+	document.getElementById("errormsg").innerText = ""
+	
 	connection.on('data', receive)
 
 	connection.open()
