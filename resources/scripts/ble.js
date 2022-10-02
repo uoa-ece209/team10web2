@@ -22,24 +22,28 @@ class BLEConnection {
 			optionalServices: [this.serviceUUID]
 		}
 
-		return navigator.bluetooth.requestDevice(params)
-			.then(device => {
-				this.connectedDevice = device
-				return device.gatt.connect()
-			})
-			.then(server => {
-				return server.getPrimaryService(this.serviceUUID)
-			})
-			.then(service => {
-				return service.getCharacteristic(this.characteristicUUID)
-					.then(s => s.startNotifications())
-					.then(s => s.addEventListener('characteristicvaluechanged', event => {
-						this._receiveData(event, this)
-					}))
-			})
-			.then(() => {
-				return this
-			})
+		try {
+			return navigator.bluetooth.requestDevice(params)
+				.then(device => {
+					this.connectedDevice = device
+					return device.gatt.connect()
+				})
+				.then(server => {
+					return server.getPrimaryService(this.serviceUUID)
+				})
+				.then(service => {
+					return service.getCharacteristic(this.characteristicUUID)
+						.then(s => s.startNotifications())
+						.then(s => s.addEventListener('characteristicvaluechanged', event => {
+							this._receiveData(event, this)
+						}))
+				})
+				.then(() => {
+					return this
+				})
+		} catch (err) {
+			return Promise.reject(err)
+		}
 	}
 
 	/**
