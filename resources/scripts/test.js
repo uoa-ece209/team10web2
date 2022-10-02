@@ -8,6 +8,10 @@ function begin() {
 	connection.on('data', receive)
 
 	connection.open()
+		.catch(err => {
+			console.log(err)
+			document.getElementById("errormsg").innerText = "An error occurred while trying to connect:\n" + err
+		})
 		// .then(() => {
 		// 	connection.write([0x68, 0x69])
 		// })
