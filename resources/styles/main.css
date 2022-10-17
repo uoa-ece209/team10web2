@@ -1,78 +1,182 @@
-h1, h2, h3, h4, h5, h6 {
-  font-family: "josefin-sans";
-  font-weight: lighter;
-}
-h1.brand, h2.brand, h3.brand, h4.brand, h5.brand, h6.brand {
-  text-transform: uppercase;
-  font-weight: 700;
-}
-h1.brand::before, h2.brand::before, h3.brand::before, h4.brand::before, h5.brand::before, h6.brand::before {
-  content: "Team";
-  border-top: 0.2em solid black;
-  border-left: 0.2em solid black;
-  padding-left: 0.4em;
-  padding-bottom: 0.2em;
-}
-h1.brand::after, h2.brand::after, h3.brand::after, h4.brand::after, h5.brand::after, h6.brand::after {
-  content: "10";
-  padding-left: 0;
-  font-size: 2.19em;
-  font-weight: 300;
+@charset "UTF-8";
+body {
+  margin: 0;
+  padding: 0;
+  max-width: 100vh;
+  margin: 0 auto 0 auto;
+  background-color: #f7f7f7;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-p {
-  font-family: "tenez";
+main {
+  min-height: 100vh;
+  display: none;
+  position: relative;
+  padding-top: 4.3em;
 }
 
-.background {
-  position: absolute;
-  left: 0;
-  right: 0;
+nav {
+  background-color: #fff;
+  position: fixed;
+  width: 100%;
   top: 0;
-  bottom: 0;
-  background-image: url(/resources/images/10.svg);
-  background-repeat: repeat;
-  background-size: 100px;
-  z-index: -10;
-  opacity: 0.1;
-  transform: rotate(45deg);
-  overflow: hidden;
+  left: 0;
+  padding: 0.7em 0 0.4em 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  z-index: 100;
 }
-
-button, input {
-  font-family: "josefin-sans";
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 16px;
-  margin: 4px;
+nav * {
+  width: 30%;
 }
-
-button {
-  background-color: #1e1e1e;
-  color: white;
+nav button {
+  position: relative;
+  text-align: left;
   border: none;
-  border-radius: 2px;
-  transition-property: background-color;
-  transition-duration: 0.2s;
-}
-button:hover {
-  background-color: cadetblue;
   cursor: pointer;
+  font-size: 1em;
+  color: cornflowerblue;
+  background-color: inherit;
+  margin: 0 0 0 10px;
+  padding: 0;
 }
-
-input {
-  border: 2px solid #1e1e1e;
-  border-radius: 2px;
+nav button.back::before {
+  content: "<";
+  padding-right: 5px;
 }
-input:hover {
-  border-color: cadetblue;
+nav h1 {
+  text-align: center;
+  font-size: 1.1em;
 }
 
 .group {
-  background-color: #D3ECED;
-  border-radius: 8px;
-  padding: 32px;
-  margin: 16px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 5px 27px 0px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0px 5px 27px 0px rgba(0, 0, 0, 0.06);
+  box-shadow: 0px 5px 27px 0px rgba(0, 0, 0, 0.06);
+}
+.group p {
+  margin: 10px;
+  color: #777;
+}
+.group > button {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 10px;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  font-size: 1em;
+  color: cornflowerblue;
+}
+.group > button::after {
+  content: "…";
+}
+.group label {
+  margin: 10px;
+  color: #777;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.group label > span {
+  flex-grow: 1;
+}
+.group label > button {
+  cursor: pointer;
+  display: inline;
+  min-width: 2em;
+  min-height: 2em;
+  text-align: center;
+  border: 1px solid cornflowerblue;
+  background-color: inherit;
+  border-radius: 3px;
+  font-size: 1em;
+  font-weight: 500;
+  color: cornflowerblue;
+}
+
+figure.highcharts-figure {
+  padding: 0;
+  margin: 0;
+}
+
+.reading-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.reading-grid .reading {
+  margin: 10px;
+  width: calc(50% - 20px);
+  min-height: 4em;
+  position: relative;
+  padding: 10px 0 0 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.reading-grid .reading.highlight {
+  background-color: #cef;
+}
+.reading-grid .reading:hover {
+  background-color: #f7f7f7;
+}
+.reading-grid .reading span.metric {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  font-size: 0.7em;
+  margin: 0 10px 5px 10px;
+}
+.reading-grid .reading .qty {
+  display: flex;
+  flex-wrap: none;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.reading-grid .reading .qty span.value {
+  margin: 5px 5px 10px 10px;
+  font-size: 2em;
+  font-weight: 200;
+}
+.reading-grid .reading .qty span.unit {
+  font-weight: 300;
+  margin: 5px 10px 10px 5px;
+}
+
+button {
+  position: relative;
+}
+
+span.less-important {
+  color: #ccc;
+}
+
+body .connected-only {
+  display: none;
+}
+body.connected .disconnected-only {
+  display: none;
+}
+body.connected .connected-only {
+  display: block;
+}
+body.connection main#connection {
+  display: block;
+}
+body.live-view main#live-view {
+  display: block;
 }
 
 /*# sourceMappingURL=main.css.map */

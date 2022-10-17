@@ -7,29 +7,70 @@
     <link rel="stylesheet" type="text/css" href="resources/styles/main.css">
     <script src="resources/scripts/ble.js"></script>
     <script src="resources/scripts/test.js"></script>
+    <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- highcharts-->
+    <script src="resources/scripts/chart.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   </head>
-  <body>
-    <div class="group">
-      <h1 class="brand"></h1>
-      <button onclick="begin()">Begin Bluetooth&reg; process</button>
-      <p id="errormsg"> </p>
-    </div>
-    <div class="group">
-      <button onclick="connection.write(255)">switch base</button>
-      <button onclick="connection.write(254)">switch speed</button>
-    </div>
-    <div class="group">
-      <button onclick="connection.write(253)">decimal place 3</button>
-      <button onclick="connection.write(252)">decimal place 2</button>
-      <button onclick="connection.write(251)">decimal place 1</button>
-      <button onclick="connection.write(250)">decimal place 0</button>
-      <button onclick="connection.write(249)">no decimal place</button>
-    </div>
-    <div class="group">
-      <label>jump to decimal value 
-        <input type="number" min="0" max="9920" step="40" id="jump">
-      </label>
-      <button onclick="connection.write(document.getElementById('jump').value / 40)">jump base 10</button>
-    </div>
+  <body class="connection">
+    <main id="connection">
+      <nav><span></span>
+        <h1>Connection</h1><span></span>
+      </nav>
+      <div class="peeping-10-logo"></div>
+      <div class="group">
+        <p id="connection-msg">To begin, make sure your Team 10 Smart Energy Monitor is plugged in and nearby.</p>
+        <button class="disconnected-only" id="connect" onclick="begin()">Connect my monitor</button>
+        <button class="connected-only" id="disconnect" onclick="disconnect()">Disconnect</button>
+      </div>
+      <div class="group connected-only">
+        <button id="live" onclick="$('body').removeClass('connection').addClass('live-view')">Enter live view</button>
+      </div>
+      <div class="group connected-only" id="brightness-adj">
+        <p>Adjust the brightness of your Smart Monitor to suit the surroundings</p>
+        <label><span>Brightness</span>
+          <button id="brightness-down" onclick="connection.print('-')">-</button>
+          <button id="brightness-up" onclick="connection.print('+')">+</button>
+        </label>
+      </div>
+    </main>
+    <main id="live-view">
+      <nav>
+        <button class="back" onclick="$('body').removeClass('live-view').addClass('connection')">Connection</button>
+        <h1>Live view</h1><span></span>
+      </nav>
+      <div class="group disconnected-only">
+        <p>You've lost connection. <span class="less-important">Historic data on this no-longer-live view will be lost when you go back to the connections screen unless you export it.</span></p>
+      </div>
+      <div class="group">
+        <figure class="highcharts-figure">
+          <p class="highcharts-description">Power consumption history</p>
+          <div id="container"></div>
+        </figure>
+      </div>
+      <div class="group">
+        <p>Live readings from your monitor</p>
+        <div class="reading-grid">
+          <div class="reading" id="power" onclick="connection.print('p')"><span class="metric">Power</span>
+            <div class="qty"><span class="value">–</span><span class="unit">W</span></div>
+          </div>
+          <div class="reading" id="energy" onclick="connection.print('e')"><span class="metric">Energy</span>
+            <div class="qty"><span class="value">–</span><span class="unit">mWh</span></div>
+          </div>
+          <div class="reading" id="voltage" onclick="connection.print('v')"><span class="metric">Voltage</span>
+            <div class="qty"><span class="value">–</span><span class="unit">V</span></div>
+          </div>
+          <div class="reading" id="current" onclick="connection.print('i')"><span class="metric">Current</span>
+            <div class="qty"><span class="value">–</span><span class="unit">mA</span></div>
+          </div>
+        </div>
+        <button onclick="connection.print('a')">Alternate readings on display</button>
+      </div>
+    </main>
   </body>
 </html>

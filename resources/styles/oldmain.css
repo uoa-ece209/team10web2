@@ -1,0 +1,88 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: "josefin-sans";
+  font-weight: lighter;
+}
+.brand:hover h1::before, .brand:hover h2::before, .brand:hover h3::before, .brand:hover h4::before, .brand:hover h5::before, .brand:hover h6::before {
+  border-color: #D3ECED;
+  font-size: 1.9em;
+  margin-left: -0.4em;
+  color: #9DB0B0;
+}
+.brand h1, .brand h2, .brand h3, .brand h4, .brand h5, .brand h6 {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.brand h1::before, .brand h2::before, .brand h3::before, .brand h4::before, .brand h5::before, .brand h6::before {
+  content: "Team";
+  border-top: 0.2em solid black;
+  border-left: 0.2em solid black;
+  padding-left: 0.4em;
+  padding-bottom: 0.2em;
+  transition-duration: 0.4s;
+  transition-property: border-color font-size color;
+}
+.brand h1::after, .brand h2::after, .brand h3::after, .brand h4::after, .brand h5::after, .brand h6::after {
+  content: "10";
+  padding-left: 0;
+  font-size: 2.19em;
+  font-weight: 300;
+  transition-duration: 0.4s;
+  transition-property: color;
+}
+
+p {
+  font-family: "tenez";
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url(/resources/images/10.svg);
+  background-repeat: repeat;
+  background-size: 100px;
+  z-index: -10;
+  opacity: 0.1;
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+
+button, input {
+  font-family: "josefin-sans";
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 16px;
+  margin: 4px;
+}
+
+button {
+  background-color: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+button:hover {
+  background-color: cadetblue;
+  cursor: pointer;
+}
+
+input {
+  border: 2px solid #1e1e1e;
+  border-radius: 2px;
+}
+input:hover {
+  border-color: cadetblue;
+}
+
+.group {
+  background-color: #D3ECED;
+  border-radius: 8px;
+  padding: 32px;
+  margin: 16px;
+}
+
+/*# sourceMappingURL=oldmain.css.map */

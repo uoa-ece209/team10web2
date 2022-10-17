@@ -4,6 +4,7 @@ class BLEConnection {
 	constructor({ serviceUUID, characteristicUUID }) {
 		this.connectedDevice = null
 		this.dataEventHandler = null
+		this.disconnectedEventHandler = null
 		this.serviceUUID = serviceUUID
 		this.characteristicUUID = characteristicUUID
 	}
@@ -25,8 +26,15 @@ class BLEConnection {
 		try {
 			return navigator.bluetooth.requestDevice(params)
 				.then(device => {
+
+					device.addEventListener('gattserverdisconnected', event => {
+						if(this.disconnectedEventHandler)
+							this.disconnectedEventHandler(event)
+					})
+
 					this.connectedDevice = device
 					return device.gatt.connect()
+
 				})
 				.then(server => {
 					return server.getPrimaryService(this.serviceUUID)
@@ -50,7 +58,7 @@ class BLEConnection {
 	 * Terminates a connection
 	 */
 	close() {
-		if (this.device) this.device.gatt.disconnect();
+		if (this.connectedDevice) this.connectedDevice.gatt.disconnect();
 	}
 
 	_receiveData(event, _self) {
@@ -101,6 +109,9 @@ class BLEConnection {
 		switch (eventType) {
 			case 'data':
 				this.dataEventHandler = handler
+				break;
+			case 'disconnected':
+				this.disconnectedEventHandler = handler
 				break;
 		}
 	}

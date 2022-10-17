@@ -5,42 +5,109 @@ var connection = new BLEConnection({
 
 function begin() {
 
-	document.getElementById("errormsg").innerText = ""
-	
-	connection.on('data', receive)
+	document.getElementById('connection-msg').innerText = 'To begin, make sure your Team 10 Energy Monitor is plugged in and nearby.'
+
+	connection.on('data', parse)
+	connection.on('disconnected', () => {
+		document.getElementById("connection-msg").innerHTML = `You've disconnected from your energy monitor. You can connect to another now if you wish. <span class="less-important">Didn't mean to disconnect? You may have gone out of range.</span>`
+		$('body').removeClass('connected')
+	})
 
 	connection.open()
+		.then(() => {
+			connection.print('r')	// recall fresh data from MCU
+			$('#container').highcharts().series[0].setData([])
+		})
+		.then(() => {
+			document.getElementById("connection-msg").innerText = "You're connected to your Energy Monitor."
+			$('body').addClass('connected')
+		})
 		.catch(err => {
 			console.log(err)
-			document.getElementById("errormsg").innerText = "An error occurred while trying to connect:\n" + err
+			document.getElementById("connection-msg").innerHTML = `There was a problem connecting to your monitor. <span style="color:#ccc">${err}</span>`
+			$('body').removeClass('connected')
 		})
-		// .then(() => {
-		// 	connection.write([0x68, 0x69])
-		// })
-
+		
 }
 
-function receive(data) {
-	console.log('%cbegin packet', 'color:cadetblue')
-	console.log('%cuint8\tchar', 'color:grey')
+var str = "";
+var buf = [];
+
+function parse(data) {
+
+
+	// console.log('%cbegin packet', 'color:cadetblue')
+	// console.log('%cuint8\tchar', 'color:grey')
+	// for(var i = 0; i < data.byteLength; ++i) {
+
+	// 	const ch = String.fromCharCode(data.getUint8(i));
+	// 	console.log(`${data.getUint8(i)}\t\t${ch}`)
+	// 	str += ch
+		
+	// }
+	// console.log('%cend packet', 'color:cadetblue')
+
+	// document.getElementById('output').innerHTML += str
+
 	for(var i = 0; i < data.byteLength; ++i) {
-		console.log(`${data.getUint8(i)}\t\t${String.fromCharCode(data.getUint8(i))}`)
+
+		const ch = String.fromCharCode(data.getUint8(i));
+		if(ch == '\n') {
+			gotLine(buf.join(''))
+			buf = [];
+		} else {
+			buf.push(ch)
+		}
+		
 	}
-	console.log('%cend packet', 'color:cadetblue')
+
 }
 
-function print(str) {
+function gotLine(line) {
 
-	if(!connection) {
-		console.err('Cannot send; no open connection.')
-		return
+	console.log(line)
+
+	// array buffers for all values, and those that we find to be numbers
+	let allValues = line.split(/(\s+)/)
+	let values = [];
+	
+	// grab the numbers
+	for(var i in allValues) {
+		const n = parseInt(allValues[i]);
+		if(!isNaN(n))
+			values.push(n)
 	}
 
-	var data = new Array()
+	if(values.length != 4)
+		// only a debug message, don't emit
+		return;
 
-	for(i in str)
-			data.push(str.charCodeAt(i))
+	let set = {
+		voltage: values[0] / 100,	// was cV, now V
+		current: values[1],			// was mA, still mA
+		power: values[2] / 100, 	// was cW, now W
+	}
 
-	connection.write(data)
+	gotSet(set)
 
+}
+
+let energyCounter = 0				// energy in J
+
+function gotSet(set) {
+	// console.log(set)
+	document.getElementById('voltage').getElementsByClassName('value')[0].innerText = set.voltage.toFixed(1)
+	document.getElementById('current').getElementsByClassName('value')[0].innerText = set.current.toFixed(0)
+	document.getElementById('power').getElementsByClassName('value')[0].innerText = set.power.toFixed(2)
+
+	const numberOfSecondsBetweenSamples = 1
+	energyCounter += set.power * numberOfSecondsBetweenSamples
+	set.energy = energyCounter / 3.600	// to mWh
+
+	document.getElementById('energy').getElementsByClassName('value')[0].innerText = set.energy.toFixed(2)
+	addPower(set.power)
+}
+
+function disconnect() {
+	connection.close();
 }
